@@ -3,10 +3,13 @@ package emailapp;
 import java.util.Scanner;
 
 class Email{
-    String firstName;
-    String lastName;
-    String deparment;
-    String password;
+    private String firstName;
+    private String lastName;
+    private String department;
+    private String password;
+    private int mailBoxCapacity;
+    private int deFaultPasswordLength = 8;
+    private String alternateEmail;
 
     //Create a constructor
     public Email(String firstName, String lastName){
@@ -15,12 +18,18 @@ class Email{
         System.out.println("Hey " + firstName+" "+lastName+", Email Created Successfully!");
 
         //Call a method asking for department - return department;
-        String chosenDepartment = setDepartment();
-        if (!chosenDepartment.isEmpty()){
-            System.out.println("\nWow, you are from "+ chosenDepartment+" department!");
+        department = setDepartment();
+        if (!department.isEmpty()){
+            System.out.println("\nWow, you are from "+ department+" department!");
         }else {
-            System.out.println("Sorry, please let us your department name");
+            System.out.println("Sorry, please let us know your department name");
+            return;
         }
+
+        //Call a method that returns a random password
+        password = randomPassword(deFaultPasswordLength);
+        System.out.println("Your default password is: " + password);
+
     }
 
     //Asking a department
@@ -38,5 +47,17 @@ class Email{
             return "";
         }
     }
+
+    //Generate a random password
+    private String randomPassword(int length){
+        String passwordSet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890)(*&^%$#@!";
+        char[] password = new char[length];
+        for (int i = 0; i < length; i++) {
+           int rand = (int) (Math.random() * passwordSet.length());
+            password[i] = passwordSet.charAt(rand);
+        }
+        return new String(password);
+    }
+
 
 }
